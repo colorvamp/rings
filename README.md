@@ -1,0 +1,2 @@
+# Rings
+Minecraft test mod
