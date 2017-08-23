@@ -42,6 +42,8 @@ rings_hud.register = function(player)
 		offset = {x = 12, y = -120},
 		position = {x = 0,y = 1},
 	})
+
+	rings_hud.update_health(player)
 end
 
 rings_hud.unregister = function(player)
