@@ -43,7 +43,10 @@ rings_hud.register = function(player)
 		position = {x = 0,y = 1},
 	})
 
-	rings_hud.update_health(player)
+	minetest.after(0, function(player)
+		-- Needs a bit of delay for loading
+		rings_hud.update_health(player)
+	end,player)
 end
 
 rings_hud.unregister = function(player)
