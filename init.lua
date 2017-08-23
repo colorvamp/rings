@@ -1,8 +1,12 @@
 -- Rings test
+rings = {
+	PLAYER_MAX_HP_DEFAULT = 20
+}
 
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 
 dofile(modpath.."/datastorage.lua")
+dofile(modpath.."/hud.lua")
 
 minetest.register_chatcommand("test1", {
 	params = "",
@@ -22,6 +26,19 @@ minetest.register_chatcommand("test1", {
 				"button[0.5,7;2,1;button1;Button 1]"..
 				"button_exit[2.5,7;2,1;button2;Exit Button]"
 		)
+		return true, "Done."
+	end,
+})
+
+minetest.register_chatcommand("test2", {
+	params = "",
+	description = "Test",
+	func = function(name, param)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "Player not found"
+		end
+		player:set_hp(param)
 		return true, "Done."
 	end,
 })
@@ -74,12 +91,24 @@ minetest.register_chatcommand("get_level", {
 
 minetest.register_on_joinplayer(function(player)
 	local player_name = player:get_player_name()
+	if player_name == "" then
+		return false
+	end
+
 	local data = datastorage.get(player_name)
 	if data == nil then
 		data = {}
 	end
 
 	-- Check for new variables
+	if data["life"] == nil then
+		datastorage.key_set(player_name,"life",50)
+		data["life"] = 50
+	end
+	if data["max_life"] == nil then
+		datastorage.key_set(player_name,"max_life",50)
+		data["max_life"] = 50
+	end
 	if data["money"] == nil then
 		datastorage.key_set(player_name,"money",0)
 	end
@@ -89,9 +118,24 @@ minetest.register_on_joinplayer(function(player)
 	if data["experience"] == nil then
 		datastorage.key_set(player_name,"experience",0)
 	end
+
+	--player:set_properties({
+	--	hp_max = data["max_life"]
+	--})
+
+	rings_hud.register(player)
 end)
 
-minetest.register_on_leaveplayer(function(player)
+core.register_playerevent(function(player,event)
+	local player_name = player:get_player_name()
+	if player_name == "" then
+		return false
+	end
 
+	if event == "health_changed" then
+		rings_hud.update_health(player)
+		--minetest.log("health"..health)
+		--minetest.log('error',event);
+	end
 end)
 
