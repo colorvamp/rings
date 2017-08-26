@@ -6,7 +6,9 @@ rings = {
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 
 dofile(modpath.."/datastorage.lua")
+dofile(modpath.."/player.lua")
 dofile(modpath.."/hud.lua")
+dofile(modpath.."/levels.lua")
 
 minetest.register_chatcommand("test1", {
 	params = "",
@@ -48,6 +50,7 @@ minetest.register_chatcommand("c", {
 	description = "Show character form",
 	func = function(player_name, param)
 		local data = datastorage.get(player_name)
+minetest.log('error',player_name..data["experience"]);
 		minetest.show_formspec(player_name,"default:character",
 				"size[13,7.5]"..
 
@@ -55,6 +58,7 @@ minetest.register_chatcommand("c", {
 				"image[0.9,1;2.9,1;char.level.label.png]"..
 
 				"label[0.3,1.2;"..data["level"].."]"..
+				"label[0.3,1.2;"..data["experience"].."]"..
 
 				"image[0,2;4,0.8;char.attrb.label.png]"..
 				"image[0,3;4,0.8;char.attrb.label.png]"..
@@ -88,13 +92,24 @@ minetest.register_chatcommand("get_level", {
 		return true, datastorage.data[player_name]["level"]
 	end,
 })
+minetest.register_chatcommand("get_experience", {
+	params = "",
+	description = "Get player experience",
+	func = function(player_name, param)
+		local player = minetest.get_player_by_name(player_name)
+		if not player then
+			return false, "Player not found"
+		end
+		return true, datastorage.data[player_name]["experience"]
+	end,
+})
 
 minetest.register_on_joinplayer(function(player)
-	local player_name = player:get_player_name()
-	if player_name == "" then
+	if not player:is_player() then
 		return false
 	end
 
+	local player_name = player:get_player_name()
 	local data = datastorage.get(player_name)
 	if data == nil then
 		data = {}
@@ -127,8 +142,7 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 core.register_playerevent(function(player,event)
-	local player_name = player:get_player_name()
-	if player_name == "" then
+	if not player:is_player() then
 		return false
 	end
 

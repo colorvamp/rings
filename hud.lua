@@ -13,7 +13,7 @@ rings_hud.register = function(player)
 	end
 
 	rings_hud.players[player_name] = {}
-	rings_hud.players[player_name]["band_top"] = 40;
+	rings_hud.players[player_name].band_top = 40;
 	rings_hud.players[player_name].band = {};
 
 	local position  = {x = 0,y = 1}
@@ -29,7 +29,7 @@ rings_hud.register = function(player)
 		scale = {x = 1,y = 1},
 		size = {x = 16,y = 16}
 	})
-	rings_hud.players[player_name]["health"] = player:hud_add({
+	rings_hud.players[player_name].health = player:hud_add({
 		hud_elem_type = "image",
 		position = position,
 		text = "hudbars_bar_health.png",
@@ -78,10 +78,10 @@ rings_hud.band.register = function(player,mate)
 	local mate_name = mate:get_player_name()
 	rings_hud.players[player_name].band[mate_name] = {};
 
-	local top = rings_hud.players[player_name]["band_top"]
+	local top = rings_hud.players[player_name].band_top
 	local alignment = {x = 1,y = 1}
 	local position  = {x = 1,y = 0}
-	rings_hud.players[player_name].band[mate_name]["bg"]
+	rings_hud.players[player_name].band[mate_name].bg
 	 = player:hud_add({
 		hud_elem_type = "image",
 		position = position,
@@ -93,7 +93,7 @@ rings_hud.band.register = function(player,mate)
 		scale = {x = 1,y = 1},
 		size = {x = 16,y = 16}
 	})
-	rings_hud.players[player_name].band[mate_name]["bar"]
+	rings_hud.players[player_name].band[mate_name].bar
 	 = player:hud_add({
 		hud_elem_type = "image",
 		position = position,
@@ -104,7 +104,7 @@ rings_hud.band.register = function(player,mate)
 		scale = {x = 80,y = 1},
 		size = {x = 16,y = 16}
 	})
-	rings_hud.players[player_name].band[mate_name]["text"]
+	rings_hud.players[player_name].band[mate_name].text
 	 = player:hud_add({
 		hud_elem_type = "text",
 		position = position,
@@ -114,7 +114,7 @@ rings_hud.band.register = function(player,mate)
 		offset = {x = -168, y = top},
 	})
 
-	rings_hud.players[player_name]["band_top"] = top + 20
+	rings_hud.players[player_name].band_top = top + 20
 end
 
 rings_hud.band.unregister = function(player,mate)
@@ -182,6 +182,8 @@ minetest.register_on_joinplayer(function(player)
 			rings_hud.band.register(_player,player)
 		end
 	end
+
+	rings_hud.update_health(player)
 end)
 
 minetest.register_on_leaveplayer(function(player)
