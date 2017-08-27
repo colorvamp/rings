@@ -7,6 +7,30 @@ rings_levels.exp['mobs_mc:zombie']   = 10
 rings_levels.exp['mobs_mc:husk']     = 10
 rings_levels.exp['mobs_mc:enderman'] = 20
 
+--fixme esto debe ir a chars o algo asi
+minetest.after(10,function()
+	local counter = {};
+
+	for _,ent in pairs(minetest.object_refs) do 
+		--ent:remove()
+		local obj = ent:get_luaentity()
+		if obj ~= nil and obj.name ~= nil then
+			if counter[obj.name] == nil then
+				counter[obj.name] = 1
+			else
+				counter[obj.name] = counter[obj.name] + 1
+			end
+			if obj.name == 'rings:dinieras_ves' then
+				print(dump(obj.name))
+			end
+		end
+	end
+
+	if counter['rings:dinieras_ves"'] == nil then
+		minetest.add_entity({x=11, y=24, z=39},"rings:dinieras_ves")
+	end
+end)
+
 minetest.after(2.5,function()
 	local ents = minetest.registered_entities
 	local monsters = {}

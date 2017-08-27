@@ -10,6 +10,9 @@ dofile(modpath.."/player.lua")
 dofile(modpath.."/hud.lua")
 dofile(modpath.."/levels.lua")
 
+-- npcs
+dofile(modpath.."/npcs/dinieras_ves.lua")
+
 minetest.register_chatcommand("test1", {
 	params = "",
 	description = "Test 1: Modify player's inventory view",
