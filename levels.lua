@@ -8,7 +8,7 @@ rings_levels.exp['mobs_mc:husk']     = 10
 rings_levels.exp['mobs_mc:enderman'] = 20
 
 --fixme esto debe ir a chars o algo asi
-minetest.after(10,function()
+minetest.after(0,function()
 	local counter = {};
 
 	for _,ent in pairs(minetest.object_refs) do 
@@ -27,7 +27,8 @@ minetest.after(10,function()
 	end
 
 	if counter['rings:dinieras_ves"'] == nil then
-		minetest.add_entity({x=11, y=24, z=39},"rings:dinieras_ves")
+		print(dump("Adding rings:dinieras_ves to set of monsters."))
+		--minetest.add_entity({x=11, y=25, z=39},"rings:dinieras_ves")
 	end
 end)
 

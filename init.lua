@@ -48,6 +48,21 @@ minetest.register_chatcommand("test2", {
 	end,
 })
 
+minetest.register_chatcommand("test3", {
+	params = "",
+	description = "Test",
+	func = function(name, param)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "Player not found"
+		end
+		local pos = player:getpos();
+		print(dump("Adding rings:dinieras_ves to set of monsters."))
+		minetest.add_entity({x=pos.x + 2, y= pos.y + 2, z= pos.z + 2},"rings:dinieras_ves")
+		return true, "Done."
+	end,
+})
+
 minetest.register_chatcommand("c", {
 	params = "",
 	description = "Show character form",
