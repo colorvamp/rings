@@ -1,7 +1,11 @@
 rings_levels = {}
 rings_levels.exp = {}
-rings_levels.exp['mobs_mc:wolf'] = 1
+rings_levels.exp['mobs_mc:wolf']     = 1
+rings_levels.exp['mobs_mc:spider']   = 8
 rings_levels.exp['mobs_mc:skeleton'] = 10
+rings_levels.exp['mobs_mc:zombie']   = 10
+rings_levels.exp['mobs_mc:husk']     = 10
+rings_levels.exp['mobs_mc:enderman'] = 20
 
 minetest.after(2.5,function()
 	local ents = minetest.registered_entities

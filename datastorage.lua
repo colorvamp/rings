@@ -74,6 +74,16 @@ function datastorage.get(id, ...)
 	return cur
 end
 
+-- Get a value under a key inside name storage
+function datastorage.key_get(name,key)
+	if datastorage.data[name] == nil
+	or datastorage.data[name][key] == nil then
+		return false
+	end
+
+	return datastorage.data[name][key]
+end
+
 -- Set a key inside name storage
 function datastorage.key_set(name,key,value)
 	if datastorage.data[name] == nil then
@@ -83,13 +93,14 @@ function datastorage.key_set(name,key,value)
 	datastorage.data[name][key] = value
 end
 
--- Increment a key inside name storage
+-- Increment a key inside name storage and returns current value
 function datastorage.key_inc(name,key,value)
 	if datastorage.data[name] == nil then
 		return false
 	end
 
 	datastorage.data[name][key] = datastorage.data[name][key] + value
+	return datastorage.data[name][key]
 end
 
 -- Saves a container and reomves it from memory

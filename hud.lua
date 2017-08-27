@@ -81,6 +81,18 @@ rings_hud.band.register = function(player,mate)
 	local top = rings_hud.players[player_name].band_top
 	local alignment = {x = 1,y = 1}
 	local position  = {x = 1,y = 0}
+	rings_hud.players[player_name].band[mate_name].face
+	 = player:hud_add({
+		hud_elem_type = "image",
+		position = position,
+		text = "hud.avatar.default.png",
+		number = 2,
+		direction = 0,
+		alignment = alignment,
+		offset = {x = -192,y = top + 1},
+		scale = {x = 0.16,y = 0.16},
+		size = {x = 16,y = 16}
+	})
 	rings_hud.players[player_name].band[mate_name].bg
 	 = player:hud_add({
 		hud_elem_type = "image",
