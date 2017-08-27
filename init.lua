@@ -6,7 +6,6 @@ rings = {
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 
 dofile(modpath.."/datastorage.lua")
-dofile(modpath.."/cmi.lua")
 dofile(modpath.."/player.lua")
 dofile(modpath.."/hud.lua")
 dofile(modpath.."/levels.lua")
