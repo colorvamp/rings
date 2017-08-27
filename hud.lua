@@ -140,9 +140,10 @@ rings_hud.band.unregister = function(player,mate)
 		return false
 	end
 
-	player:hud_remove(rings_hud.players[player_name].band[mate_name]["bg"])
-	player:hud_remove(rings_hud.players[player_name].band[mate_name]["bar"])
-	player:hud_remove(rings_hud.players[player_name].band[mate_name]["text"])
+	player:hud_remove(rings_hud.players[player_name].band[mate_name].face)
+	player:hud_remove(rings_hud.players[player_name].band[mate_name].bg)
+	player:hud_remove(rings_hud.players[player_name].band[mate_name].bar)
+	player:hud_remove(rings_hud.players[player_name].band[mate_name].text)
 	rings_hud.players[player_name].band[mate_name] = nil
 end
 
