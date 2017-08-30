@@ -10,7 +10,7 @@ mobs:register_mob("rings:dinieras_ves", {
 	pathfinding = true,
 	hp_min = 10000,
 	hp_max = 10000,
-	armor = 100,
+	armor = 300,
 	collisionbox = {-0.35,-1.0,-0.35, 0.35,0.8,0.35},
 	visual = "mesh",
 	mesh = "character.b3d",

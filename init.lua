@@ -48,6 +48,22 @@ minetest.register_chatcommand("test2", {
 	end,
 })
 
+minetest.register_chatcommand("get_npcs", {
+	params = "",
+	description = "Get npcs status",
+	func = function(player_name, param)
+		local status = ""
+		for name,dummy in pairs(rings_levels.npc) do
+			status = datastorage.key_get("___npcs_status",name)
+			if status == false then
+				status = "unknown"
+			end
+			minetest.chat_send_player(player_name,name.." is "..status)
+		end
+		return true, "Done."
+	end,
+})
+
 minetest.register_chatcommand("test3", {
 	params = "",
 	description = "Test",

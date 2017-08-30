@@ -7,6 +7,9 @@ rings_levels.exp['mobs_mc:zombie']   = 10
 rings_levels.exp['mobs_mc:husk']     = 10
 rings_levels.exp['mobs_mc:enderman'] = 20
 
+rings_levels.npc = {}
+rings_levels.npc['rings:dinieras_ves'] = true
+
 --fixme esto debe ir a chars o algo asi
 minetest.after(0,function()
 	local counter = {};
@@ -26,9 +29,27 @@ minetest.after(0,function()
 		end
 	end
 
-	if counter['rings:dinieras_ves"'] == nil then
+	if counter['rings:dinieras_ves'] == nil then
 		print(dump("Adding rings:dinieras_ves to set of monsters."))
 		--minetest.add_entity({x=11, y=25, z=39},"rings:dinieras_ves")
+	end
+end)
+
+cmi.register_on_activatemob(function(mob,dtime)
+	local name = mob:get_luaentity().name
+	print(dump("added " .. name))
+
+	-- Check named
+	if rings_levels.npc[name] ~= nil then
+		local old_status = datastorage.key_get("___npcs_status",name)
+		if old_status ~= "alive" then
+			-- print(dump("status set: " .. name))
+			datastorage.key_set("___npcs_status",name,"alive")
+			print(dump(datastorage.data["___npcs_status"]))
+		else
+			-- remove duplicates
+			mob:remove();
+		end
 	end
 end)
 
@@ -37,6 +58,12 @@ cmi.register_on_diemob(function(mob,cause)
 	 and cause.puncher ~= nil
 	 and cause.puncher:is_player() then
 		local name = mob:get_luaentity().name
+
+		-- Check named
+		if rings_levels.npc[name] ~= nil then
+			datastorage.key_set("___npcs_status",name,"dead")
+		end
+
 		print(dump("killed " .. name))
 		if rings_levels.exp[name] ~= nil then
 			rings_player.experience_add(cause.puncher,rings_levels.exp[name]);
@@ -56,7 +83,7 @@ minetest.after(2.5,function()
 	end
 
 	for _,monster in pairs(monsters) do
-		if false then
+		if false then --disabled
 			if monster.on_punch ~= nil then
 				monster._old_on_punch = monster.on_punch;
 			end

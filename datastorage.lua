@@ -87,7 +87,7 @@ end
 -- Set a key inside name storage
 function datastorage.key_set(name,key,value)
 	if datastorage.data[name] == nil then
-		return false
+		datastorage.data[name] = {}
 	end
 
 	datastorage.data[name][key] = value
