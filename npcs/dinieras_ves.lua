@@ -3,7 +3,7 @@
 mobs:register_mob("rings:dinieras_ves", {
 	type = "npc",
 	passive = false,
-	damage = 3,
+	damage = 12,
 	attack_type = "dogfight",
 	attacks_monsters = true,
 	owner_loyal = false,
